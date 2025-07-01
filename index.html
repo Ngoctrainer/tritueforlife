@@ -5,6 +5,67 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vòng Quay Đổi Sao Nhận Quà</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      text-align: center;
+      font-family: sans-serif;
+    }
+    .wheel-container {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      margin: 20px auto;
+    }
+    .wheel {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 10px solid #ccc;
+      background: conic-gradient(
+        #f44336 0% 11.11%,      /* 1M */
+        #9c27b0 11.11% 22.22%, /* 500K */
+        #3f51b5 22.22% 33.33%, /* 300K */
+        #2196f3 33.33% 44.44%, /* 200K */
+        #ff9800 44.44% 55.55%, /* 100K */
+        #ffeb3b 55.55% 66.66%, /* 50K */
+        #00bcd4 66.66% 77.77%, /* 20K */
+        #4caf50 77.77% 88.88%, /* 10K */
+        #8bc34a 88.88% 100%    /* MISS */
+      );
+      transition: transform 3s cubic-bezier(0.25, 1, 0.5, 1);
+      position: relative;
+    }
+    .pointer {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 30px solid red;
+      z-index: 10;
+    }
+    .label {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform-origin: 0 0;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    #spinBtn {
+      font-size: 18px;
+      padding: 10px 20px;
+      margin-top: 20px;
+    }
+    #resultMessage {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 20px;
+    }
+  </style>
 </head>
 <body>
   <h1>Vòng Quay Đổi Sao Nhận Quà</h1>
@@ -18,15 +79,17 @@
   <p id="spinInfo"></p>
 
   <div class="wheel-container">
- <div class="wheel" id="wheel">
-<div class="label" style="transform: rotate(22.5deg) translate(100px) rotate(-22.5deg)">1M</div>
-<div class="label" style="transform: rotate(67.5deg) translate(100px) rotate(-67.5deg)">500k</div>
-<div class="label" style="transform: rotate(112.5deg) translate(100px) rotate(-112.5deg)">300K</div>
-<div class="label" style="transform: rotate(157.5deg) translate(100px) rotate(-157.5deg)">200K</div>
-<div class="label" style="transform: rotate(202.5deg) translate(100px) rotate(-202.5deg)">100K</div>
-<div class="label" style="transform: rotate(247.5deg) translate(100px) rotate(-247.5deg)">50K</div>
-<div class="label" style="transform: rotate(292.5deg) translate(100px) rotate(-292.5deg)">20K</div>
-<div class="label" style="transform: rotate(337.5deg) translate(100px) rotate(-337.5deg)">10K</div>
+    <div class="pointer"></div>
+    <div class="wheel" id="wheel">
+      <div class="label" style="transform: rotate(20deg) translate(120px) rotate(-20deg)">1M</div>
+      <div class="label" style="transform: rotate(60deg) translate(120px) rotate(-60deg)">500K</div>
+      <div class="label" style="transform: rotate(100deg) translate(120px) rotate(-100deg)">300K</div>
+      <div class="label" style="transform: rotate(140deg) translate(120px) rotate(-140deg)">200K</div>
+      <div class="label" style="transform: rotate(180deg) translate(120px) rotate(-180deg)">100K</div>
+      <div class="label" style="transform: rotate(220deg) translate(120px) rotate(-220deg)">50K</div>
+      <div class="label" style="transform: rotate(260deg) translate(120px) rotate(-260deg)">20K</div>
+      <div class="label" style="transform: rotate(300deg) translate(120px) rotate(-300deg)">10K</div>
+      <div class="label" style="transform: rotate(340deg) translate(120px) rotate(-340deg)">🍀</div>
     </div>
   </div>
 
