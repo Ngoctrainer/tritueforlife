@@ -74,24 +74,20 @@ const extraSpins = Math.floor(Math.random() * 3 + 5) * 360;
 
 const targetAngle = extraSpins + prizeAngle;
 
-// Khi bấm quay
-wheel.style.transition = "transform 5s ease-out";
-wheel.style.transform = `rotate(${targetAngle}deg)`;
+// Trước khi bắt đầu quay
+wheel.style.transition = "none";
+wheel.style.transform = "rotate(0deg)";
 
-// Sau khi quay xong + xử lý
+setTimeout(() => {
+  wheel.style.transition = "transform 5s ease-out";
+  wheel.style.transform = `rotate(${targetAngle}deg)`;
+}, 50);
+
+// Sau quay xong (không cần reset 0deg nữa)
 setTimeout(async () => {
   resultMessage.textContent = `Bạn trúng: ${selectedPrize.name}`;
-  try {
-    const res = await fetch(...);
-    // Cập nhật kết quả
-  } catch (err) {
-    console.error(err);
-    resultMessage.textContent = "Lỗi ghi nhận kết quả.";
-  }
-
-  // ✅ Reset sẵn sàng cho lần quay sau
-  wheel.style.transition = "none";
-  wheel.style.transform = "rotate(0deg)";
+  resultMessage.style.marginTop = "20px";
+  // ...
   spinBtn.disabled = false;
-
 }, 5000);
+
