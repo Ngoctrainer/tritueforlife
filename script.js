@@ -20,19 +20,20 @@ startBtn.addEventListener('click', async () => {
   try {
     const res = await fetch(`${SCRIPT_URL}?action=getSpins&username=${encodeURIComponent(username)}`);
     const data = await res.json();
+    console.log("Kết quả kiểm tra lượt:", data);
 
-    if (data.success) {
+    if (data.success === true) {
       currentSpins = data.spins;
       spinInfo.textContent = currentSpins > 0
         ? `Bạn còn ${currentSpins} lượt quay.`
         : "Bạn đã hết lượt quay.";
       spinBtn.disabled = currentSpins <= 0;
     } else {
-      spinInfo.textContent = "Không tìm thấy username hoặc lỗi server.";
+      spinInfo.textContent = "Không tìm thấy mã nhân sự hoặc lỗi server.";
       spinBtn.disabled = true;
     }
   } catch (err) {
-    console.error(err);
+    console.error("Lỗi khi kiểm tra lượt:", err);
     spinInfo.textContent = "Lỗi kết nối server.";
     spinBtn.disabled = true;
   }
@@ -55,43 +56,55 @@ spinBtn.addEventListener('click', async () => {
     { code: "G", name: "Voucher 10.000đ", percent: 50 }
   ];
 
-  // Xác định giải thưởng
+  // Random giải thưởng
   let r = Math.random() * 100;
   let selectedPrize = prizes.find(p => {
     r -= p.percent;
     return r < 0;
   }) || prizes[prizes.length - 1];
 
-  // Tính góc quay
+  // Xoay vòng quay
   const slice = 360 / prizes.length;
-const index = prizes.indexOf(selectedPrize);
+  const index = prizes.indexOf(selectedPrize);
+  const prizeAngle = index * slice + slice / 2;
+  const extraSpins = Math.floor(Math.random() * 3 + 5) * 360;
+  const targetAngle = extraSpins + (360 - prizeAngle); // Để dừng đúng giải dưới mũi tên
 
-// Góc chính xác của giải
-const prizeAngle = index * slice + slice / 2; // Lấy giữa slice
-
-// Quay ngẫu nhiên 5-7 vòng
-const extraSpins = Math.floor(Math.random() * 3 + 5) * 360;
-
-const targetAngle = extraSpins + prizeAngle;
-
-// Khi bấm quay
-wheel.style.transition = "transform 5s ease-out";
-wheel.style.transform = `rotate(${targetAngle}deg)`;
-
-// Sau khi quay xong + xử lý
-setTimeout(async () => {
-  resultMessage.textContent = `Bạn trúng: ${selectedPrize.name}`;
-  try {
-    const res = await fetch(...);
-    // Cập nhật kết quả
-  } catch (err) {
-    console.error(err);
-    resultMessage.textContent = "Lỗi ghi nhận kết quả.";
-  }
-
-  // ✅ Reset sẵn sàng cho lần quay sau
+  // Reset trước khi quay
   wheel.style.transition = "none";
   wheel.style.transform = "rotate(0deg)";
-  spinBtn.disabled = false;
 
-}, 5000);
+  setTimeout(() => {
+    wheel.style.transition = "transform 3s cubic-bezier(0.25, 1, 0.5, 1)";
+    wheel.style.transform = `rotate(${targetAngle}deg)`;
+  }, 50);
+
+  // Sau khi quay xong
+  setTimeout(async () => {
+    resultMessage.textContent = `Bạn trúng: ${selectedPrize.name}`;
+    resultMessage.style.marginTop = "20px";
+    resultMessage.style.fontWeight = "bold";
+
+    try {
+      const username = usernameInput.value.trim();
+      const res = await fetch(`${SCRIPT_URL}?action=spin&username=${encodeURIComponent(username)}&prize=${selectedPrize.code}`);
+      const data = await res.json();
+      console.log("Kết quả ghi log:", data);
+
+      if (data.success === true) {
+        currentSpins = data.spins || 0;
+        spinInfo.textContent = currentSpins > 0
+          ? `Bạn còn ${currentSpins} lượt quay.`
+          : "Bạn đã hết lượt quay.";
+      } else {
+        resultMessage.textContent += " (Ghi kết quả lỗi)";
+      }
+    } catch (err) {
+      console.error("Lỗi ghi kết quả:", err);
+      resultMessage.textContent += " (Lỗi server)";
+    }
+
+    spinBtn.disabled = currentSpins <= 0;
+
+  }, 3500); // bằng thời gian quay
+});
