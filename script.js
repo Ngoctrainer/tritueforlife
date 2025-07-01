@@ -20,8 +20,6 @@ startBtn.addEventListener('click', async () => {
   try {
     const res = await fetch(`${SCRIPT_URL}?action=getSpins&username=${encodeURIComponent(username)}`);
     const data = await res.json();
-    console.log("Kết quả kiểm tra lượt:", data);
-
     if (data.success === true) {
       currentSpins = data.spins;
       spinInfo.textContent = currentSpins > 0
@@ -33,7 +31,7 @@ startBtn.addEventListener('click', async () => {
       spinBtn.disabled = true;
     }
   } catch (err) {
-    console.error("Lỗi khi kiểm tra lượt:", err);
+    console.error(err);
     spinInfo.textContent = "Lỗi kết nối server.";
     spinBtn.disabled = true;
   }
@@ -61,7 +59,6 @@ spinBtn.addEventListener('click', async () => {
     const username = usernameInput.value.trim();
     const res = await fetch(`${SCRIPT_URL}?action=spin&username=${encodeURIComponent(username)}`);
     const data = await res.json();
-    console.log("Kết quả quay:", data);
 
     if (data.success === true) {
       currentSpins = data.spins;
@@ -77,28 +74,22 @@ spinBtn.addEventListener('click', async () => {
       const extraSpins = Math.floor(Math.random() * 3 + 5) * 360;
       const targetAngle = extraSpins + (360 - prizeAngle);
 
-      // Reset trước khi quay
       wheel.style.transition = "none";
       wheel.style.transform = "rotate(0deg)";
 
       setTimeout(() => {
-        wheel.style.transition = "transform 3s cubic-bezier(0.25, 1, 0.5, 1)";
+        wheel.style.transition = "transform 50ms cubic-bezier(0.25, 1, 0.5, 1)";
         wheel.style.transform = `rotate(${targetAngle}deg)`;
       }, 50);
 
       setTimeout(() => {
         resultMessage.textContent = `Bạn trúng: ${prizeName}`;
-        resultMessage.style.marginTop = "20px";
-        resultMessage.style.fontWeight = "bold";
-        resultMessage.style.fontSize = "20px";
-        spinBtn.disabled = currentSpins <= 0;
       }, 3500);
     } else {
       resultMessage.textContent = "Có lỗi khi quay số.";
     }
-
   } catch (err) {
-    console.error("Lỗi khi quay:", err);
+    console.error(err);
     resultMessage.textContent = "Lỗi kết nối khi quay.";
   }
 });
