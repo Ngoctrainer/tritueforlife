@@ -1,54 +1,65 @@
 body {
-  font-family: sans-serif;
   text-align: center;
-  background: #f5f5f5;
+  font-family: sans-serif;
 }
-h1 {
-  font-size: 2em;
-  margin-bottom: 10px;
-}
-.user-input {
-  margin-bottom: 10px;
-}
-#wheel {
-  margin: 0 auto;
+
+.wheel-container {
+  position: relative;
   width: 300px;
   height: 300px;
+  margin: 20px auto;
+}
+
+.wheel {
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   border: 10px solid #ccc;
   background: conic-gradient(
-    #4caf50 0 45deg,
-    #f44336 45deg 90deg,
-    #9c27b0 90deg 135deg,
-    #3f51b5 135deg 180deg,
-    #2196f3 180deg 225deg,
-    #ff9800 225deg 270deg,
-    #ffeb3b 270deg 315deg,
-    #00bcd4 315deg 360deg
+    #f44336 0% 11.11%,
+    #9c27b0 11.11% 22.22%,
+    #3f51b5 22.22% 33.33%,
+    #2196f3 33.33% 44.44%,
+    #ff9800 44.44% 55.55%,
+    #ffeb3b 55.55% 66.66%,
+    #00bcd4 66.66% 77.77%,
+    #4caf50 77.77% 88.88%,
+    #8bc34a 88.88% 100%
   );
+  transition: transform 3s cubic-bezier(0.25, 1, 0.5, 1);
   position: relative;
 }
+
+.pointer {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 30px solid red;
+  z-index: 10;
+}
+
 .label {
   position: absolute;
   left: 50%;
   top: 50%;
   transform-origin: 0 0;
+  font-size: 12px;
   font-weight: bold;
-  color: white;
-  font-size: 13px;
-  text-shadow: 1px 1px 2px black;
-  /* Căn chỉnh text lệch trái nhẹ cho đẹp */
-  transform: translate(-60%, -50%) rotate(var(--angle)) translate(90px) translateX(-30px) rotate(calc(-10 * var(--angle)));
 }
 
 #spinBtn {
+  font-size: 18px;
+  padding: 10px 20px;
   margin-top: 20px;
-  padding: 15px 30px;
-  font-size: 1.2em;
-  font-weight: bold;
 }
+
 #resultMessage {
   margin-top: 20px;
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 20px;
 }
