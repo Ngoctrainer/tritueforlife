@@ -35,8 +35,12 @@ body {
   left: 50%;
   top: 50%;
   transform-origin: 0 0;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
+  color: white;
+  text-shadow: 1px 1px 2px black;
+  /* Đưa text vào gần tâm hơn và canh đúng góc */
+  transform: rotate(var(--angle)) translate(80px) rotate(calc(-1 * var(--angle)));
 }
 
 #spinBtn {
