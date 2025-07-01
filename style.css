@@ -30,19 +30,6 @@ body {
   position: relative;
 }
 
-.pointer {
-  position: absolute;
-  top: -20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 15px solid transparent;
-  border-right: 15px solid transparent;
-  border-bottom: 30px solid red;
-  z-index: 10;
-}
-
 .label {
   position: absolute;
   left: 50%;
