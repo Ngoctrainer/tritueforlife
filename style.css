@@ -1,0 +1,60 @@
+body {
+  text-align: center;
+  font-family: sans-serif;
+}
+
+.wheel-container {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: 20px auto;
+}
+
+.wheel {
+  width: 100%;
+  height: 100%;
+  border: 10px solid #ccc;
+  border-radius: 50%;
+  position: relative;
+  transition: transform 5s ease-out;
+  background: conic-gradient(
+    #f44336 0 45deg,
+    #9c27b0 45deg 90deg,
+    #3f51b5 90deg 135deg,
+    #2196f3 135deg 180deg,
+    #ff9800 180deg 225deg,
+    #ffeb3b 225deg 270deg,
+    #00bcd4 270deg 315deg,
+    #4caf50 315deg 360deg
+  );
+}
+
+.label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-origin: 0 0;
+  font-weight: bold;
+  font-size: 14px;
+  color: white;
+  text-shadow: 1px 1px 2px black;
+  transform: rotate(var(--angle)) translate(120px) rotate(calc(-1 * var(--angle)));
+}
+
+.pointer {
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 24px solid black;
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#spinBtn {
+  padding: 10px 20px;
+  font-size: 20px;
+  font-weight: bold;
+}
