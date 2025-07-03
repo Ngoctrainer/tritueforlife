@@ -34,13 +34,23 @@ body {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform-origin: 0 0;
-  font-size: 14px;
   font-weight: bold;
   color: white;
+  font-size: 16px;
   text-shadow: 1px 1px 2px black;
-  /* Đưa text vào gần tâm hơn và canh đúng góc */
-  transform: rotate(var(--angle)) translate(80px) rotate(calc(-1 * var(--angle)));
+  transform-origin: 0 0;
+  transform: translate(-50%, -50%) rotate(var(--angle)) translate(95px) rotate(calc(-1 * var(--angle)));
+}
+
+/* Dịch riêng các label cần đẩy xa thêm 10px (~1cm) */
+.label-100k {
+  transform: translate(-50%, -50%) rotate(var(--angle)) translate(105px) rotate(calc(-1 * var(--angle)));
+}
+.label-200k {
+  transform: translate(-50%, -50%) rotate(var(--angle)) translate(105px) rotate(calc(-1 * var(--angle)));
+}
+.label-300k {
+  transform: translate(-50%, -50%) rotate(var(--angle)) translate(105px) rotate(calc(-1 * var(--angle)));
 }
 
 #spinBtn {
