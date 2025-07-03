@@ -55,39 +55,49 @@ spinBtn.addEventListener('click', async () => {
     { code: "MISS", label: "🍀" }
   ];
 
+  const username = usernameInput.value.trim();
+
   try {
-    const username = usernameInput.value.trim();
     const res = await fetch(`${SCRIPT_URL}?action=spin&username=${encodeURIComponent(username)}`);
     const data = await res.json();
 
-    if (data.success === true) {
-      currentSpins = data.spins;
-      spinInfo.textContent = currentSpins > 0
-        ? `Bạn còn ${currentSpins} lượt quay.`
-        : "Bạn đã hết lượt quay.";
-
-      const prizeCode = data.prizeCode;
-      const prizeName = data.prizeName;
-      const index = prizes.findIndex(p => p.code === prizeCode);
-      const slice = 360 / prizes.length;
-      const prizeAngle = index * slice + slice / 2;
-      const extraSpins = Math.floor(Math.random() * 3 + 5) * 360;
-      const targetAngle = extraSpins + (360 - prizeAngle);
-
-      wheel.style.transition = "none";
-      wheel.style.transform = "rotate(0deg)";
-
-      setTimeout(() => {
-        wheel.style.transition = "transform 50ms cubic-bezier(0.25, 1, 0.5, 1)";
-        wheel.style.transform = `rotate(${targetAngle}deg)`;
-      }, 50);
-
-      setTimeout(() => {
-        resultMessage.textContent = `Bạn trúng: ${prizeName}`;
-      }, 3500);
-    } else {
+    if (!data.success) {
       resultMessage.textContent = "Có lỗi khi quay số.";
+      return;
     }
+
+    // Lấy dữ liệu trả về từ server
+    currentSpins = data.spins;
+    const prizeCode = data.prizeCode;
+    const prizeName = data.prizeName;
+
+    spinInfo.textContent = currentSpins > 0
+      ? `Bạn còn ${currentSpins} lượt quay.`
+      : "Bạn đã hết lượt quay.";
+
+    // Tìm vị trí giải trên vòng quay
+    const slice = 360 / prizes.length;
+    const index = prizes.findIndex(p => p.code === prizeCode);
+    const angleToPrize = index * slice + slice / 2;
+    const extraSpins = Math.floor(Math.random() * 3 + 5) * 360;
+    const targetAngle = extraSpins + (360 - angleToPrize); // Quay ngược chiều kim đồng hồ
+
+    // Reset về góc 0 để đảm bảo hiệu ứng hoạt động
+    wheel.style.transition = "none";
+    wheel.style.transform = "rotate(0deg)";
+
+    // Bắt đầu xoay sau 50ms (bắt buộc phải delay nhẹ)
+    setTimeout(() => {
+      wheel.style.transition = "transform 5s ease-out";
+      wheel.style.transform = `rotate(${targetAngle}deg)`;
+    }, 50);
+
+    // Hiện kết quả sau khi quay xong
+    setTimeout(() => {
+      resultMessage.textContent = `Bạn trúng: ${prizeName}`;
+      spinBtn.disabled = currentSpins <= 0;
+    }, 5300);
+
   } catch (err) {
     console.error(err);
     resultMessage.textContent = "Lỗi kết nối khi quay.";
