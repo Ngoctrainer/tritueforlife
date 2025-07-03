@@ -86,11 +86,11 @@ spinBtn.addEventListener('click', async () => {
     wheel.style.transition = "none";
     wheel.style.transform = "rotate(0deg)";
 
-    // Bắt đầu xoay sau 50ms (bắt buộc phải delay nhẹ)
+    // Bắt đầu xoay sau 5ms (bắt buộc phải delay nhẹ)
     setTimeout(() => {
       wheel.style.transition = "transform 5s ease-out";
       wheel.style.transform = `rotate(${targetAngle}deg)`;
-    }, 50);
+    }, 5);
 
     // Hiện kết quả sau khi quay xong
     setTimeout(() => {
