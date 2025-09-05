@@ -1,4 +1,4 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz4YvU2ZeOkbjTu4Olad4frRPgg7wBHAGQ0ql6QafxC9Xq0lWNVzBnAsZraDHbXJTH0og/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzKs4xxsPOheTYqEpLA0TTytryryULYTAAJe5z-oke_JPiZUwCPkB5ttRh3g8UR1fKktQ/exec";
 
 const usernameInput = document.getElementById("username");
 const startBtn = document.getElementById("startBtn");
